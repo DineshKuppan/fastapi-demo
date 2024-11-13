@@ -1,0 +1,22 @@
+services:
+  redis:
+    image: redis:6.2-alpine
+    networks:
+    - fastapi_network
+
+  fastapi-redis-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kuppandinesh/fastapi-redis-app:latest
+    networks:
+    - fastapi_network
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+
+networks:
+  fastapi_network:
+    driver: bridge

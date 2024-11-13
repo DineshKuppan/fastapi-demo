@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi-redis-app
+  labels:
+    app: fastapi-redis
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fastapi-redis
+  template:
+    metadata:
+      labels:
+        app: fastapi-redis
+    spec:
+      containers:
+        - name: fastapi-redis-container
+          image: kuppandinesh/fastapi-redis-app:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: REDIS_PORT
+              value: "6379"
