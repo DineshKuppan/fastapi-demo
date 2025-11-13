@@ -16,6 +16,10 @@ app = FastAPI()
 async def read_root():
     return {"message": "Hello, FastAPI with Redis!"}
 
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
+
 @app.get("/cache/{key}")
 async def read_cache(key: str):
     value = redis_client.get(key)
